@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Negocios CU</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <h1>🏫 Club Empresarios</h1>
+</header>
+
+<nav>
+  <button onclick="mostrarSeccion('todos')">Todos</button>
+  <button onclick="mostrarSeccion('favoritos')">Favoritos ⭐</button>
+</nav>
+
+<div class="container">
+
+  <input type="text" id="buscador" placeholder="Buscar negocio o producto...">
+  
+  <select id="filtroUbicacion">
+  <option value="">Todas las ubicaciones</option>
+  <option>Facultad de Ingeniería</option>
+  <option>Facultad de Medicina</option>
+  <option>Rectoría</option>
+  <option>Área común</option>
+  </select>
+
+  <button class="btn-main" onclick="abrirModal()">+ Agregar negocio</button>
+
+  <div id="lista" class="grid"></div>
+
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal" onclick="cerrarModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <h2>Negocio</h2>
+
+    <input type="text" id="nombre" placeholder="Nombre" required>
+
+    <select id="categoria" required>
+      <option value="">Categoría</option>
+      <option>Comida</option>
+      <option>Servicios</option>
+      <option>Ropa</option>
+      <option>Tecnología</option>
+    </select>
+
+    <select id="ubicacion" required>
+      <option value="">Ubicación en CU</option>
+      <option>Facultad de Ingeniería</option>
+      <option>Facultad de Medicina</option>
+      <option>Rectoría</option>
+      <option>Área común</option>
+    </select>
+
+    <input type="text" id="horario" placeholder="Horario (ej: 8am - 2pm)">
+    <input type="text" id="producto" placeholder="Producto" required>
+    <input type="text" id="contacto" placeholder="Contacto" required>
+    <input type="file" id="imagen">
+
+    <button onclick="guardar()">Guardar</button>
+    <button onclick="cerrarModal()">Cancelar</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
