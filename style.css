@@ -1,6 +1,8 @@
+/* ===== BASE ===== */
 body {
   font-family: Arial;
-  margin: 0;
+  margin: auto;
+  max-width: 500px; /* 👈 modo app */
   background: #eef1f5;
 }
 
@@ -9,6 +11,9 @@ header {
   color: white;
   padding: 15px;
   text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 nav {
@@ -18,24 +23,25 @@ nav {
   padding: 10px;
 }
 
-/* BOTONES */
+/* ===== BOTONES ===== */
 button {
-  border-radius: 8px;
-  background: #0d6efd;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0d6efd, #4dabf7);
   color: white;
   margin: 3px;
   padding: 8px 12px;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: 0.2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 button:hover {
-  background: #0b5ed7;
+  background: linear-gradient(135deg, #0b5ed7, #339af0);
 }
 
 button:active {
-  transform: scale(0.9);
+  transform: scale(0.95);
 }
 
 .btn-main {
@@ -43,38 +49,40 @@ button:active {
   margin: 10px 0;
 }
 
-/* CONTENEDOR (modo app) */
+/* ===== CONTENEDOR ===== */
 .container {
-  max-width: 500px;
-  margin: auto;
   padding: 10px;
 }
 
-/* GRID */
+/* ===== GRID ===== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 10px;
+  grid-template-columns: 1fr; /* 👈 una columna tipo app */
+  gap: 12px;
 }
 
-/* CARD */
+/* ===== CARD ===== */
 .card {
   background: white;
   padding: 12px;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: 0.2s;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,255,255,0.2);
+  animation: fadeIn 0.4s ease;
 }
 
 .card:hover {
   transform: scale(1.02);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
 
-/* IMAGEN */
+/* ===== IMAGEN ===== */
 .img-container {
   width: 100%;
   height: 180px;
@@ -87,15 +95,14 @@ button:active {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s;
 }
 
 .img-container img:hover {
   transform: scale(1.1);
 }
 
-/* TEXTO */
+/* ===== TEXTO ===== */
 .card h3 {
   margin: 5px 0;
 }
@@ -109,14 +116,39 @@ button:active {
   color: #555;
 }
 
+/* ===== TAGS ===== */
 .tag {
-  background: #0d6efd;
   color: white;
-  padding: 3px 6px;
-  border-radius: 5px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  display: inline-block;
 }
 
-/* MODAL */
+.tag.Comida { background: #ff9800; }
+.tag.Servicios { background: #4caf50; }
+.tag.Ropa { background: #e91e63; }
+.tag.Tecnología { background: #2196f3; }
+
+/* ===== ACCIONES (EDITAR / ELIMINAR) ===== */
+.acciones {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.card:hover .acciones {
+  opacity: 1;
+}
+
+.acciones button {
+  flex: 1;
+  font-size: 13px;
+}
+
+/* ===== MODAL ===== */
 .modal {
   display: none;
   position: fixed;
@@ -129,6 +161,10 @@ button:active {
   align-items: center;
 }
 
+.modal.active {
+  display: flex;
+}
+
 .modal-content {
   background: white;
   padding: 20px;
@@ -137,21 +173,21 @@ button:active {
   border-radius: 12px;
 }
 
-/* WHATSAPP */
+/* ===== WHATSAPP ===== */
 .btn-whatsapp {
   display: block;
   text-align: center;
   margin-top: 10px;
   background: #25D366;
   color: white;
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 10px;
+  border-radius: 12px;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: bold;
 }
 
-/* INPUTS */
+/* ===== INPUTS ===== */
 #buscador {
   width: 100%;
   padding: 10px;
@@ -166,4 +202,113 @@ input, select {
   margin: 5px 0;
   border-radius: 8px;
   border: 1px solid #ccc;
+}
+
+/* ===== DETALLE (PERFIL) ===== */
+.detalle { 
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 9999; 
+  overflow-y: auto;
+}
+
+.detalle-content {
+  max-width: 500px;
+  margin: auto;
+  padding: 15px;
+  position: relative;
+  z-index: 10000;
+}
+
+.detalle-img {
+  width: 100%;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+.detalle button {
+  position: sticky;
+  top: 0;
+  z-index: 10001;
+}
+
+/* ===== PRODUCTOS ===== */
+.producto {
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 12px;
+  margin: 10px 0;
+}
+
+.producto-item {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0;
+  align-items: center;
+}
+
+.producto-item input {
+  flex: 1;
+}
+
+.producto-item button {
+  background: red;
+  padding: 6px 10px;
+}
+.producto-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+/* ===== HOME ACCIONES ===== */
+.acciones-home {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.accion {
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.accion:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.accion h3 {
+  margin: 0 0 5px 0;
+}
+
+.accion p {
+  font-size: 13px;
+  color: #555;
+}
+
+/* hacer que el tercero ocupe todo */
+.accion:nth-child(3) {
+  grid-column: span 2;
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
