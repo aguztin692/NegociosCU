@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Negocios CU</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 
 <body>
@@ -29,6 +29,23 @@
   <option>Rectoría</option>
   <option>Área común</option>
   </select>
+
+  <div class="acciones-home">
+    <div class="accion" onclick="cambiarVista('productos')">
+      <h3>🛍️ Vender ahora</h3>
+      <p>Publica tus productos y empieza a vender dentro de CU</p>
+    </div>
+
+    <div class="accion" onclick="cambiarVista('pagina')">
+      <h3>🌐 Crea tu página</h3>
+      <p>Obtén tu propia página para tu negocio</p>
+    </div>
+
+    <div class="accion" onclick="cambiarVista('estudio')">
+      <h3>📊 Estudio de mercado</h3>
+      <p>Descubre qué productos se venden más</p>
+    </div>
+  </div>
 
   <button class="btn-main" onclick="abrirModal()">+ Agregar negocio</button>
 
@@ -60,7 +77,8 @@
     </select>
 
     <input type="text" id="horario" placeholder="Horario (ej: 8am - 2pm)">
-    <input type="text" id="producto" placeholder="Producto" required>
+    <div id="listaProductos"></div>
+    <button type="button" onclick="agregarProducto()">+ Agregar producto</button>
     <input type="text" id="contacto" placeholder="Contacto" required>
     <input type="file" id="imagen">
 
@@ -69,7 +87,15 @@
   </div>
 </div>
 
+<div id="detalle" class="detalle" onclick="cerrarDetalle()">
+  <div class="detalle-content" onclick="event.stopPropagation()">
+  <button onclick="event.stopPropagation(); cerrarDetalle()">⬅ Volver</button> 
+  <div id="detalleInfo"></div>
+  </div>
+</div> 
+
 <script src="app.js"></script>
+
 
 </body>
 </html>
