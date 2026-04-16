@@ -6,7 +6,7 @@ body {
   background: var(--fondo);
 }
 header {
-  background: var(--azul);
+  background: white;
   display: flex;
   justify-content: center;
   align-items: center;
