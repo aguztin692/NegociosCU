@@ -7,6 +7,7 @@ const filtroUbicacion = document.getElementById("filtroUbicacion");
 const buscador = document.getElementById("buscador");
 
 function render() {
+  
   lista.innerHTML = "";
 
   if (vista === "pagina") {
@@ -61,6 +62,19 @@ function render() {
   }
 
   datos.forEach((n) => {
+    const productosPreview = n.productos?.slice(0, 2) || [];
+
+    let previewHTML = "";
+
+    productosPreview.forEach(p => {
+      if (p.imagen) {
+        previewHTML += `<img src="${p.imagen}" class="preview-img">`;
+      }
+    });
+
+    if (n.productos && n.productos.length > 2) {
+      previewHTML += `<span class="extra">+${n.productos.length - 2}</span>`;
+    }
     const index = negocios.indexOf(n);
 
     const div = document.createElement("div");
@@ -83,31 +97,14 @@ function render() {
       ` : ""}
 
       <span class="tag ${n.categoria}">${n.categoria}</span>  
+
       <h3>${n.nombre}</h3>
 
-      <p><strong>${primerProducto?.nombre || "Sin producto"}</strong></p>
-      
-      <p>💰 $${primerProducto?.precio || "N/A"}</p>
-
-      ${n.productos && n.productos.length > 1 ? `
-        <small>+ ${n.productos.length - 1} productos más</small>
-      ` : ""}
-
       <p>📍 ${n.ubicacion || "Sin ubicación"}</p>
-      <p>⏱️ ${n.horario || "Sin horario"}</p>
 
-      <small>${n.contacto || "Sin contacto"}</small><br><br>
-
-      ${n.contacto && primerProducto ? `
-        <a class="btn-whatsapp" 
-        href="https://wa.me/${numero}?text=Hola,%20quiero%20pedir:%20${primerProducto.nombre}%20-%20$${primerProducto.precio}" 
-        target="_blank"
-        onclick="event.stopPropagation()">
-          💬 Pedir
-        </a>
-      ` : ""}
-
-      <br><br>
+      <div class="preview">
+        ${previewHTML}  
+      </div>
 
       <div class="acciones">
         <button onclick="event.stopPropagation(); editar(${index})">✏️</button>
@@ -166,7 +163,7 @@ function guardar() {
 
     const nombreProd = inputs[0].value.trim();
     const precioProd = inputs[1].value.trim();
-    const fileProd = inputs[2].files[0];
+    const fileProd = inputs[2]?.files[0] || null;
 
     if (!nombreProd) {
       procesados++;
@@ -175,26 +172,29 @@ function guardar() {
 
     // 📸 si tiene imagen
     if (fileProd) {
-      const reader = new FileReader();
-      reader.onload = e => {
-        productos[i] = {
-          nombre: nombreProd,
-          precio: precioProd,
-          imagen: e.target.result
-        };
-        procesados++;
-        if (procesados === items.length) continuar();
-      };
-      reader.readAsDataURL(fileProd);
-    } else {
-      productos[i] = {
+    const reader = new FileReader();
+    reader.onload = e => {
+      productos.push({
         nombre: nombreProd,
         precio: precioProd,
-        imagen: null
-      };
+        imagen: e.target.result
+      });
+
       procesados++;
       if (procesados === items.length) continuar();
-    }
+    };
+    reader.readAsDataURL(fileProd);
+
+  } else {
+    productos.push({
+      nombre: nombreProd,
+      precio: precioProd,
+      imagen: null
+    });
+
+    procesados++;
+    if (procesados === items.length) continuar();
+  }
   });
 
   // 📸 imagen del negocio
@@ -250,8 +250,6 @@ function editar(i) {
 
   document.getElementById("nombre").value = n.nombre;
   document.getElementById("categoria").value = n.categoria;
-  document.getElementById("producto").value = primerProducto.nombre;
-  document.getElementById("precio").value = primerProducto.precio;
   document.getElementById("contacto").value = n.contacto;
   document.getElementById("ubicacion").value = n.ubicacion || "";
   document.getElementById("horario").value = n.horario || "";
@@ -282,11 +280,11 @@ function mostrarSeccion(tipo) {
 function limpiar() {
   document.getElementById("nombre").value = "";
   document.getElementById("categoria").value = "";
-  document.getElementById("producto").value = "";
   document.getElementById("contacto").value = "";
   document.getElementById("ubicacion").value = "";
   document.getElementById("horario").value = "";
   document.getElementById("imagen").value = "";
+  document.getElementById("listaProductos").innerHTML = "";
 }
 function abrirDetalle(i) {
   const n = negocios[i];
@@ -356,19 +354,21 @@ function cerrarDetalle() {
   if (detalle) detalle.style.display = "none";
   if (info) info.innerHTML = "";
 }
-function agregarProducto(nombre = "", precio = "") {
+function agregarProducto() {
+  const contenedor = document.getElementById("listaProductos");
+
   const div = document.createElement("div");
   div.classList.add("producto-item");
 
   div.innerHTML = `
-    <input type="text" placeholder="Producto" value="${nombre}">
-    <input type="number" placeholder="Precio" value="${precio}">
-    <input type="file" accept="image/*" onclick="event.stopPropagation()">
-    <button type="button" onclick="event.stopPropagation(); this.parentElement.remove()">❌</button>
+    <input type="text" placeholder="Nombre del producto" class="prod-nombre">
+    <input type="number" placeholder="Precio" class="prod-precio">
+    <input type="file" class="prod-imagen">
+    <button onclick="this.parentElement.remove()">❌</button>
   `;
 
-  document.getElementById("listaProductos").appendChild(div);
-}
+  contenedor.appendChild(div);
+} 
 function cambiarVista(tipo) {
   vista = tipo;
   render();
