@@ -5,7 +5,6 @@ body {
   max-width: 500px; /* 👈 modo app */
   background: var(--fondo);
 }
-
 header {
   background: var(--azul);
   display: flex;
@@ -15,8 +14,20 @@ header {
   position: sticky;
   top: 0;
   z-index: 10;
+  transition: all 0.3s ease;
 }
 
+/* 👇 cuando haces scroll */
+header.compacto {
+  padding: 6px 0;
+  backdrop-filter: blur(10px);
+  background: rgba(13, 110, 253, 0.9);
+}
+
+/* 👇 el texto también se reduce */
+header.compacto h1 {
+  font-size: 18px;
+}
 nav {
   display: flex;
   justify-content: center;
