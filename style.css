@@ -305,13 +305,26 @@ input, select {
   gap: 6px;
   margin-top: 8px;
   align-items: center;
+  flex-wrap: nowrap;        
+  overflow-x: auto;         
 }
 
 .preview-img {
   width: 45px;
   height: 45px;
+  min-width: 45px;          
+  min-height: 45px;         
+  max-width: 45px;          
+  max-height: 45px;         
   object-fit: cover;
   border-radius: 8px;
+  flex-shrink: 0;           
+}
+.preview img {
+  width: 45px !important;
+  height: 45px !important;
+  max-width: 45px !important;
+  max-height: 45px !important;
 }
 
 .extra {
