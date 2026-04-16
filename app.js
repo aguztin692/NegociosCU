@@ -373,5 +373,18 @@ function cambiarVista(tipo) {
   vista = tipo;
   render();
 }
+let ultimoScroll = 0;
+
+window.addEventListener("scroll", () => {
+  const header = document.querySelector("header");
+
+  if (window.scrollY > 50) {
+    header.classList.add("compacto");
+  } else {
+    header.classList.remove("compacto");
+  }
+});
+
+
 buscador.addEventListener("input", render); 
 render();
