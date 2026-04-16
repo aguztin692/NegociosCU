@@ -300,7 +300,26 @@ input, select {
 .accion:nth-child(3) {
   grid-column: span 2;
 }
+.preview {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  align-items: center;
+}
 
+.preview-img {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.extra {
+  font-size: 12px;
+  background: #eee;
+  padding: 5px 8px;
+  border-radius: 8px;
+}
 /* ===== ANIMACIONES ===== */
 @keyframes fadeIn {
   from {
