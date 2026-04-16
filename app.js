@@ -30,7 +30,7 @@ function render() {
     lista.innerHTML = `
       <div class="card">
         <h2>📊 Estudio de mercado</h2>
-        <p>Recibe información sobre los productos más vendidos en CU.</p>
+        <p>Conéctate y colabora con otros alumnos para realizar estudios de mercado colaborativos</p>   
 
         <br>
 
@@ -67,7 +67,7 @@ function render() {
     let previewHTML = "";
 
     productosPreview.forEach(p => {
-      if (p.imagen) {
+      if (p.imagen) { 
         previewHTML += `<img src="${p.imagen}" class="preview-img">`;
       }
     });
