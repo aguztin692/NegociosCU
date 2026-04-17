@@ -21,7 +21,7 @@ header {
 header.compacto {
   padding: 6px 0;
   backdrop-filter: blur(10px);
-  background: rgba(13, 110, 253, 0.9);
+  background: white;
 }
 
 /* 👇 el texto también se reduce */
