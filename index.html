@@ -9,7 +9,7 @@
 
 <body>
 
-<header>
+<header onclick="mostrarSeccion('todos')">
   <h1 class="logo-titulo">
     <img src="logoCU2.png" class="logo">
   </h1>
@@ -22,45 +22,110 @@
 
 <div class="container">
 
-  <input type="text" id="buscador" placeholder="Buscar negocio o producto...">
-  
-  <select id="filtroUbicacion">
-    <option value="">Todas las ubicaciones</option>
-    <option>Facultad de Ingeniería</option>
-    <option>Facultad de Medicina</option>
-    <option>Facultad de Ciencias Económicas y Sociales</option>
-    <option>Facultad de Derecho</option>
-    <option>Facultad de Psicología</option>
-    <option>Facultad de Odontología</option>
-    <option>Facultad de Contaduría y Administración</option>
-    <option>Rectoría</option>
-    <option>Área común</option>
-  </select>
+  <!-- HERO -->
+  <section class="hero" id="hero">
 
-  <div class="acciones-home">
-    <div class="accion" onclick="cambiarVista('productos')">
-      <h3>🛍️ Vender ahora</h3>
-      <p>Publica tus productos y empieza a vender dentro de CU</p>
+    <div class="hero-contenido">
+
+      <div class="hero-texto">
+
+        <span class="hero-badge">
+          🎓 Comunidad universitaria CU
+        </span>
+
+        <h1>
+          Descubre negocios universitarios en un solo lugar
+        </h1>
+
+        <p>
+          Compra, vende y conecta con estudiantes emprendedores dentro de Ciudad Universitaria.
+        </p>
+
+        <div class="hero-botones">
+
+          <button onclick="window.scrollTo({
+            top: document.getElementById('contenidoHome').offsetTop - 50,
+            behavior: 'smooth'
+          })">
+            Explorar
+          </button>
+
+          <button class="hero-secundario"
+            onclick="cambiarVista('productos')">
+            Publicar negocio
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="hero-img">
+        <img src="./hero.jpg" alt="Comunidad universitaria">
+      </div>
+
     </div>
 
-    <div class="accion" onclick="cambiarVista('pagina')">
-      <h3>🌐 Crea tu página</h3>
-      <p>Obtén tu propia página para tu negocio</p>
+  </section>
+
+  <!-- CONTENIDO HOME -->
+  <div id="contenidoHome">
+
+    <input type="text" id="buscador" placeholder="Buscar negocio o producto...">
+    
+    <select id="filtroUbicacion">
+      <option value="">Todas las ubicaciones</option>
+      <option>Facultad de Arquitectura</option>
+      <option>Facultad de Ingeniería Culiacán</option>
+      <option>Facultad de Ciencias de la Tierra y el Espacio</option>
+      <option>Facultad de Ciencias Físico-Matemáticas</option>
+      <option>Facultad de Ciencias Químico-Biológicas</option>
+      <option>Facultad de Informática</option>
+      <option>Facultad de Ciencias Económicas y Sociales</option>
+      <option>Facultad de Estudios Internacionales y Políticas Públicas</option>
+      <option>Facultad de Contaduría y Administración</option>
+      <option>Facultad de Derecho</option>
+      <option>Facultad de Psicología</option>
+      <option>Facultad de Odontología</option>
+      <option>Comedor Universitario</option>
+    </select>
+
+    <div class="acciones-home">
+
+      <div class="accion" onclick="cambiarVista('productos')">
+        <h3>🛍️ Vender ahora</h3>
+
+        <p>
+          Crea tu espacio dentro del marketplace universitario de CU.
+        </p>
+
+        <small class="cuota">
+          Plan mensual desde $249 MXN
+        </small>
+      </div>
+
+      <div class="accion" onclick="cambiarVista('pagina')">
+        <h3>🌐 Crea tu página</h3>
+        <p>Obtén tu propia página para tu negocio</p>
+      </div>
+
+      <div class="accion" onclick="cambiarVista('estudio')">
+        <h3>📊 Estudio de mercado</h3>
+        <p>Obtén datos y análisis para tomar decisiones inteligentes en tu emprendimiento</p>
+      </div>
+
     </div>
 
-    <div class="accion" onclick="cambiarVista('estudio')">
-      <h3>📊 Estudio de mercado</h3>
-      <p>Obtén datos y análisis para tomar decisiones inteligentes en tu emprendimiento</p>
-    </div>
+    <button class="btn-main" onclick="abrirModal()">
+      + Agregar negocio
+    </button>
+
+    <div id="lista" class="grid"></div>
+
   </div>
-
-  <button class="btn-main" onclick="abrirModal()">+ Agregar negocio</button>
-
-  <div id="lista" class="grid"></div>
 
 </div>
 
-<!-- MODAL -->
+<!-- MODAL -->  
 <div id="modal" class="modal" onclick="cerrarModal()">
   <div class="modal-content" onclick="event.stopPropagation()">
     <h2>Negocio</h2>
@@ -77,15 +142,18 @@
 
     <select id="ubicacion" required>
       <option value="">Todas las ubicaciones</option>
-        <option>Facultad de Ingeniería</option>
-        <option>Facultad de Medicina</option>
-        <option>Facultad de Ciencias Económicas y Sociales</option>
-        <option>Facultad de Derecho</option>
-        <option>Facultad de Psicología</option>
-        <option>Facultad de Odontología</option>
-        <option>Facultad de Contaduría y Administración</option>
-        <option>Rectoría</option>
-        <option>Área común</option>
+      <option>Facultad de Ingeniería Culiacán</option>
+      <option>Facultad de Ciencias de la Tierra y el Espacio</option>
+      <option>Facultad de Ciencias Físico-Matemáticas</option>
+      <option>Facultad de Ciencias Químico-Biológicas</option>
+      <option>Facultad de Informática</option>
+      <option>Facultad de Ciencias Económicas y Sociales</option>
+      <option>Facultad de Estudios Internacionales y Políticas Públicas</option>
+      <option>Facultad de Contaduría y Administración</option>
+      <option>Facultad de Derecho</option>
+      <option>Facultad de Psicología</option>
+      <option>Facultad de Odontología</option>
+      <option>Comedor Universitario</option>
     </select>
 
     <input type="text" id="horario" placeholder="Horario (ej: 8am - 2pm)">
@@ -105,6 +173,7 @@
   <div id="detalleInfo"></div>
   </div>
 </div> 
+
 
 <script src="app.js"></script>
 
