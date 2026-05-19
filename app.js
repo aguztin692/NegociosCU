@@ -7,39 +7,134 @@ const filtroUbicacion = document.getElementById("filtroUbicacion");
 const buscador = document.getElementById("buscador");
 
 function render() {
+
+  const hero = document.getElementById("hero");
+  const contenidoHome = document.getElementById("contenidoHome");
+  const btnMain = document.querySelector(".btn-main");
   
   lista.innerHTML = "";
 
-  if (vista === "pagina") {
-    lista.innerHTML = `
-      <div class="card">
-        <h2>🌐 Crea tu página</h2>
-        <p>¿Quieres una página profesional para tu negocio?</p>
-        <p>Contáctanos y nosotros la creamos por ti.</p>
-
-        <br>
-
-        <p>📧 contacto@negocioscu.com</p>
-        <p>📱 WhatsApp: 667-000-0000</p>
-      </div>
-    `;
-    return;
+  if (vista === "todos") {
+    hero.style.display = "flex";
+    contenidoHome.style.display = "block";
+  } else {
+    hero.style.display = "none";
+    contenidoHome.style.display = "none";
   }
+
+  if (vista === "productos") {
+
+  hero.style.display = "none";
+  contenidoHome.style.display = "block";
+
+  lista.innerHTML = `
+    <div class="card">
+      <h2>🛍️ Publica tu negocio</h2>
+
+      <p>
+        Forma parte del marketplace universitario de CU y comienza a vender dentro del campus.
+      </p>
+
+      <br>
+
+      <div class="plan-card">
+        <h3>Plan Emprendedor</h3>
+        <div class="precio">$249 MXN / mes</div>
+
+        <p>
+          Incluye publicación de productos, perfil del negocio y contacto directo por WhatsApp.
+        </p>
+      </div>
+
+      <br>
+
+      <button onclick="abrirModal()">
+        Publicar mi negocio
+      </button>
+    </div>
+  `;
+
+  return;
+}
+
+  if (vista === "pagina") {
+  lista.innerHTML = `
+    <div class="card card-full">
+      <h2>🌐 Página personalizada</h2>
+
+      <p>Obtén una página profesional para tu negocio universitario.</p>
+
+      <div class="planes">
+
+        <div class="planes">
+
+  <div class="plan-card">
+    <h3>💼 Básica</h3>
+
+    <p class="precio">$1,500 MXN</p>
+
+    <small>
+      Página informativa con datos de contacto y presentación del negocio.
+    </small>
+  </div>
+
+  <div class="plan-card">
+    <h3>🛍️ Catálogo</h3>
+
+    <p class="precio">$3,500 MXN</p>
+
+    <small>
+      Catálogo de productos, integración con WhatsApp y diseño personalizado.
+    </small>
+  </div>
+
+  <div class="plan-card">
+    <h3>🚀 Premium</h3>
+
+    <p class="precio">$6,000 MXN</p>
+
+    <small>
+      Diseño avanzado, branding, optimización móvil y funciones especiales.
+    </small>
+  </div>
+
+</div>
+
+      </div>
+
+      <br>
+
+      <p>📧 contacto@negocioscu.com</p>
+      <p>📱 WhatsApp: 667-000-0000</p>
+
+      <button onclick="alert('Solicitud enviada correctamente ✅')">
+        Solicitar información
+      </button>
+    </div>
+  `;
+  return;
+}
 
   if (vista === "estudio") {
-    lista.innerHTML = `
-      <div class="card">
-        <h2>📊 Estudio de mercado</h2>
-        <p>Conéctate y colabora con otros alumnos para realizar estudios de mercado colaborativos</p>   
+  lista.innerHTML = `
+    <div class="card card-full">
+      <h2>📊 Estudio de mercado</h2>
 
-        <br>
+      <p>
+        Conéctate y colabora con otros alumnos para realizar estudios de mercado colaborativos.
+      </p>
 
-        <input type="email" placeholder="Tu correo">
-        <button>Registrarme</button>
-      </div>
-    `;
-    return;
-  }
+      <br>
+
+      <input type="email" id="correoEstudio" placeholder="Tu correo">
+
+      <button onclick="registrarCorreo()">
+        Registrarme
+      </button>
+    </div>
+  `;
+  return;
+}
 
   let datos = negocios;
 
@@ -217,6 +312,14 @@ function guardar() {
       negocios.push(obj);
     }
 
+    const confirmar = confirm(
+      "Publicar este negocio tiene una tarifa de $29 MXN. ¿Deseas continuar?"
+    );
+
+    if (!confirmar) return;
+
+    alert("Pago procesado exitosamente ✅");
+
     localStorage.setItem("negocios", JSON.stringify(negocios));
     cerrarModal();
     render();
@@ -385,6 +488,22 @@ window.addEventListener("scroll", () => {
   }
 });
 
+function registrarCorreo() {
+  const correo = document.getElementById("correoEstudio").value;
+
+  if (!correo) {
+    alert("Ingresa un correo");
+    return;
+  }
+
+  let correos = JSON.parse(localStorage.getItem("correosEstudio")) || [];
+
+  correos.push(correo);
+
+  localStorage.setItem("correosEstudio", JSON.stringify(correos));
+
+  alert("Registro enviado correctamente ✅");
+}
 
 buscador.addEventListener("input", render); 
 render();
