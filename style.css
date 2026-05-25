@@ -209,11 +209,14 @@ select {
 
 /* ===== ACCIONES HOME ===== */
 
+/* ===== ACCIONES HOME ===== */
+
 .acciones-home {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   margin-bottom: 15px;
+  align-items: stretch;
 }
 
 .accion {
@@ -223,6 +226,17 @@ select {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   cursor: pointer;
   transition: 0.2s;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.accion p {
+  font-size: 14px;
+  color: #555;
+  margin-top: 6px;
+  line-height: 1.4;
 }
 
 .accion:hover {
@@ -231,11 +245,6 @@ select {
 
 .accion h3 {
   margin-bottom: 8px;
-}
-
-.accion p {
-  font-size: 14px;
-  color: #555;
 }
 
 .accion:nth-child(3) {
@@ -248,7 +257,19 @@ select {
   color: var(--verde);
   font-weight: bold;
 }
+.accion h3 {
+  color: #111 !important;
+}
 
+.accion p {
+  color: #555 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.accion {
+  color: #111 !important;
+}
 /* ===== BOTON PRINCIPAL ===== */
 
 .btn-main {
@@ -279,6 +300,9 @@ select {
   cursor: pointer;
   transition: 0.2s;
   animation: fadeIn 0.4s ease;
+}
+.card-full {
+  grid-column: 1 / -1;
 }
 
 .card:hover {
