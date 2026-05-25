@@ -104,8 +104,8 @@ function render() {
 
       <br>
 
-      <p>📧 contacto@negocioscu.com</p>
-      <p>📱 WhatsApp: 667-000-0000</p>
+      <p>📧 contacto@SpotU.com</p>
+      <p>📱 WhatsApp: 667 575 9804</p>
 
       <button onclick="alert('Solicitud enviada correctamente ✅')">
         Solicitar información
