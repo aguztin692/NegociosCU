@@ -15,11 +15,11 @@ function render() {
   lista.innerHTML = "";
 
   if (vista === "todos") {
-    hero.style.display = "flex";
-    contenidoHome.style.display = "block";
+  hero.style.display = "flex";
+  contenidoHome.style.display = "block";
   } else {
     hero.style.display = "none";
-    contenidoHome.style.display = "none";
+    contenidoHome.style.display = "block";
   }
 
   if (vista === "productos") {
