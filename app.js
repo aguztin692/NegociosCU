@@ -39,7 +39,7 @@ function render() {
 
       <div class="plan-card">
         <h3>Plan Emprendedor</h3>
-        <div class="precio">$249 MXN / mes</div>
+        <div class="precio">$300 MXN / mes</div>
 
         <p>
           Incluye publicación de productos, perfil del negocio y contacto directo por WhatsApp.
@@ -170,14 +170,13 @@ function render() {
     if (n.productos && n.productos.length > 2) {
       previewHTML += `<span class="extra">+${n.productos.length - 2}</span>`;
     }
-    const index = negocios.indexOf(n);
+    
 
     const div = document.createElement("div");
     div.classList.add("card");
 
     // ✅ ahora SIEMPRE abre el detalle
-    div.onclick = () => abrirDetalle(index);
-
+    div.onclick = () => abrirDetalle(n.id);
     const numero = n.contacto ? n.contacto.replace(/\D/g, "") : "";
 
     const primerProducto = n.productos && n.productos.length > 0
@@ -202,9 +201,9 @@ function render() {
       </div>
 
       <div class="acciones">
-        <button onclick="event.stopPropagation(); editar(${index})">✏️</button>
-        <button onclick="event.stopPropagation(); eliminar(${index})">🗑️</button>
-        <button onclick="event.stopPropagation(); fav(${index})">
+        <button onclick="event.stopPropagation(); editar(${n.id})">✏️</button>
+        <button onclick="event.stopPropagation(); eliminar(${n.id})">🗑️</button>
+        <button onclick="event.stopPropagation(); fav(${n.id})">
           ${n.favorito ? "⭐" : "☆"}
         </button>
       </div>
@@ -295,6 +294,7 @@ function guardar() {
   // 📸 imagen del negocio
   function guardarFinal(imagenNegocio) {
     const obj = {
+      id: Date.now(),
       nombre,
       categoria,
       productos,
@@ -305,23 +305,34 @@ function guardar() {
       favorito: editando !== null ? negocios[editando].favorito : false
     };
 
-    if (editando !== null) {
-      negocios[editando] = obj;
-      editando = null;
-    } else {
-      negocios.push(obj);
-    }
-
     const confirmar = confirm(
-      "Publicar este negocio tiene una tarifa de $29 MXN. ¿Deseas continuar?"
+      "Publicar este negocio tiene una tarifa de $300 MXN. ¿Deseas continuar?"
     );
 
     if (!confirmar) return;
 
+    if (editando !== null) {
+
+      obj.id = negocios[editando].id;
+
+      negocios[editando] = obj;
+      editando = null;
+
+    } else {
+
+      negocios.push(obj);
+
+    }
+
+    localStorage.setItem(
+      "negocios",
+      JSON.stringify(negocios)
+    );
+
     alert("Pago procesado exitosamente ✅");
 
-    localStorage.setItem("negocios", JSON.stringify(negocios));
     cerrarModal();
+
     render();
   }
 
@@ -335,9 +346,13 @@ function guardar() {
     }
   }
 }
-function editar(i) {
-  const n = negocios[i];
+function editar(id) {
 
+  const i = negocios.findIndex(n => n.id === id);
+
+  if (i === -1) return;
+
+  const n = negocios[i];
   // soporte para datos viejos (muy importante)
   if (!n.productos) {
     n.productos = [
@@ -360,17 +375,24 @@ function editar(i) {
   editando = i;
   abrirModal();
 }
-function eliminar(i) {
+function eliminar(id) {
   if (confirm("¿Eliminar este negocio?")) {
-    negocios.splice(i, 1);
+    const index = negocios.findIndex(n => n.id === id);
+    if (index === -1) return;
+    negocios.splice(index, 1);
     localStorage.setItem("negocios", JSON.stringify(negocios));
     render();
   }
 
 }
 
-function fav(i) {
-  negocios[i].favorito = !negocios[i].favorito;
+function fav(id) {
+  const negocio = negocios.find(
+  n => n.id === id
+  );
+  if (!negocio) return;
+  negocio.favorito = !negocio.favorito;
+
   localStorage.setItem("negocios", JSON.stringify(negocios));
   render();
 }
@@ -389,10 +411,14 @@ function limpiar() {
   document.getElementById("imagen").value = "";
   document.getElementById("listaProductos").innerHTML = "";
 }
-function abrirDetalle(i) {
-  const n = negocios[i];
+function abrirDetalle(id) {
 
-  if (!n) return; // seguridad
+  const n = negocios.find(
+    n => n.id === id
+  );
+
+  if (!n) return;
+ // seguridad
 
   const numero = n.contacto ? n.contacto.replace(/\D/g, "") : "";
 
@@ -482,6 +508,8 @@ function cambiarVista(tipo) {
     });
   }, 100);
 }
+
+
 let ultimoScroll = 0;
 
 window.addEventListener("scroll", () => {
