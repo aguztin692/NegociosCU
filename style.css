@@ -17,15 +17,17 @@ body {
 }
 
 header {
-  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(14px);
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 12px 0;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  transition: all 0.3s ease;
+  transition: 0.3s;
 }
 
 header.compacto {
@@ -42,7 +44,27 @@ nav {
   display: flex;
   justify-content: center;
   gap: 10px;
-  padding: 10px;
+
+  padding: 8px 14px 18px;
+}
+
+nav button {
+  background: white;
+  color: #111;
+
+  border: 1px solid #e5e7eb;
+
+  box-shadow: none;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  font-weight: 600;
+}
+
+nav button:hover {
+  background: #f3f4f6;
 }
 
 /* ===== BOTONES ===== */
@@ -77,7 +99,8 @@ button:active {
 }
 
 .logo {
-  width: 170px;
+  width: 125px;
+  transition: 0.3s;
 }
 
 /* ===== CONTENEDOR ===== */
@@ -296,6 +319,7 @@ select {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   overflow: hidden;
   display: flex;
+  gap: 10px;
   flex-direction: column;
   cursor: pointer;
   transition: 0.2s;
