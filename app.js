@@ -475,6 +475,12 @@ function agregarProducto() {
 function cambiarVista(tipo) {
   vista = tipo;
   render();
+
+  setTimeout(() => {
+    document.getElementById("contenidoHome").scrollIntoView({
+      behavior: "smooth"
+    });
+  }, 100);
 }
 let ultimoScroll = 0;
 
